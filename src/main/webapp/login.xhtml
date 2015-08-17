@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html 
+	lang="#{localeController.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="template/Layout.xhtml">
+    	<ui:define name="content">
+    	
+    	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+    	
+          <h:form>
+            <h:panelGrid columns="2">
+                <h:outputText value="#{dictionary.username}"></h:outputText>
+                <h:inputText value="#{loginController.username}"></h:inputText>
+                <h:outputText value="#{dictionary.password}"></h:outputText>
+                <h:inputSecret value="#{loginController.password}"></h:inputSecret>
+            </h:panelGrid>
+            <h:commandButton value="#{dictionary.login}" action="#{loginController.login}"></h:commandButton>
+        </h:form>  
+
+
+    </ui:define>
+</ui:composition>
+
+</html>

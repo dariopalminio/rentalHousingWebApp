@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html 
+	lang="#{localeController.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+		
+
+	<ui:composition template="template/Layout.xhtml">
+
+		<ui:define name="content">
+		
+		<!-- Refreshing Table -->
+        #{personsListController.updateTable()}
+
+		<h:form id="personForm">
+
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+				<p:dataTable 
+					id="personTableId" 
+					var="person"
+					rowKey="#{person.id}"
+					value="#{personsListController.personListDataModel}" 
+					paginator="true"
+					editable="true" 
+					selection="#{personsListController.selectedPerson}" 
+					rows="10"
+					selectionMode="single">
+
+					<f:facet name="header">	
+         					 #{dictionary.persons_list}
+         					  
+						<p:button outcome="personAdd" value="#{dictionary.add}"></p:button>
+						<p:commandButton value="Refresh" update=":personForm:personTableId"
+							actionListener="#{personsListController.updateTable()}">
+						</p:commandButton>
+					</f:facet>					
+								
+					<p:column>
+						<f:facet name="header">
+							<h:outputText styleClass="outputText" value="#{dictionary.last_name}"></h:outputText>
+						</f:facet>
+						<h:outputText styleClass="outputText" value="#{person.lastName}"></h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText styleClass="outputText" value="#{dictionary.first_name}"></h:outputText>
+						</f:facet>
+						<h:outputText styleClass="outputText" value="#{person.firstName}"></h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{dictionary.action}" />
+						</f:facet>				
+						
+						<p:commandButton value="#{dictionary.edit}" update=":personForm:personTableId"
+							actionListener="#{personsListController.redirectToPersonEdit(event)}">
+						</p:commandButton>
+						
+						<p:commandButton value="#{dictionary.delete}" update=":personForm:personTableId"
+							actionListener="#{personsListController.deletePerson(event)}">
+						</p:commandButton>
+						
+					</p:column>
+					
+				</p:dataTable>
+		</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

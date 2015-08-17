@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	lang="#{localeController.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+
+<ui:composition template="template/Layout.xhtml">
+
+<ui:define name="content">
+
+<f:metadata>
+    <f:viewParam name="personId" value="#{personEditController.personId}" />
+</f:metadata>
+
+#{personEditController.loadData()}
+
+<h:form>
+ 
+ 		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		
+		<p:panelGrid id="editpanel" columns="2">
+
+			<h:outputLabel for="firstName" value="#{dictionary.first_name}" />
+			<p:inputText id="firstName"
+				value="#{personEditController.person.firstName}"
+				label="Person Name" maxlength="40"/>
+
+			<h:outputLabel for="lastName" value="#{dictionary.last_name}" />
+			<p:inputText id="lastName"
+				value="#{personEditController.person.lastName}"
+				required="false" label="Last Name"  maxlength="40" />
+
+			<h:outputLabel for="dniTypeId" value="#{dictionary.dni_type}" />
+			<p:selectOneMenu id="dniTypeId" value="#{personEditController.person.dniType}" required="true" >
+    			<f:selectItems value="#{personEditController.dniTypeList}" />
+			</p:selectOneMenu>
+
+			<h:outputLabel for="dniCode" value="#{dictionary.dni}" />
+			<p:inputText id="dniCode"
+				value="#{personEditController.person.dniCode}"
+				required="false" label="dniCode"  maxlength="40"/>
+
+			<h:outputLabel for="address" value="#{dictionary.address}" />
+			<p:inputText id="address"
+				value="#{personEditController.person.address}"
+				required="false" label="address"  maxlength="250"/>
+
+			<h:outputLabel for="city" value="#{dictionary.city}" />
+			<p:inputText id="city"
+				value="#{personEditController.person.city}"
+				required="false" label="city"  maxlength="40" />
+
+			<h:outputLabel for="email" value="#{dictionary.email}" />
+			<p:inputText id="email"
+				value="#{personEditController.person.email}"
+				required="false" label="email"  maxlength="45">
+				<f:validator validatorId="controller.emailValidator" />
+			</p:inputText>
+			
+			<h:outputLabel for="mobile" value="#{dictionary.mobile}" />
+			<p:inputText id="mobile"
+				value="#{personEditController.person.mobile}"
+				required="false" label="mobile"  maxlength="15"/>
+				
+			<h:outputLabel for="phone" value="#{dictionary.phone}" />
+			<p:inputText id="phone"
+				value="#{personEditController.person.phone}"
+				required="false" label="phone"  maxlength="15" />
+
+		</p:panelGrid>
+
+<p:growl id="messagePopup" life="2000" />
+
+	 <p:commandButton value="#{dictionary.save}" 
+	 	id="commandButtonEdit" 
+	 	update="messagePopup"
+	 	actionListener="#{personEditController.save}" 
+		styleClass="ui-priority-primary" />
+		
+</h:form>
+</ui:define>
+</ui:composition>
+	
+</h:body>
+</html>

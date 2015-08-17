@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="#{localeController.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+
+	<ui:composition template="template/Layout.xhtml">
+
+		<ui:define name="content">
+
+			<f:metadata>
+				<f:viewParam name="usernameToEdit"
+					value="#{userEditController.usernameToEdit}" />
+			</f:metadata>
+
+			#{userEditController.loadData()}
+
+		<h:form>
+ 
+ 		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		
+		<p:panelGrid id="editpanel" columns="2">
+
+			<h:outputLabel for="firstName" value="#{dictionary.username}" />
+			<p:inputText id="firstName"
+				value="#{userEditController.user.username}"
+				label="User Name" maxlength="40" readonly="true"/>
+
+		</p:panelGrid>
+
+		<h:outputLabel for="firstName" value="#{dictionary.roles}:" />
+
+		<p:pickList id="pickList" 
+			value="#{userEditController.rolesDualListModel}" 
+			var="traslatedRoleEntry" 
+			itemLabel="#{traslatedRoleEntry.label}" 
+			itemValue="#{traslatedRoleEntry}" 
+			converter="traslatedRoleEntryPickListConverter"
+			> 
+			     <f:facet name="sourceCaption">Available Roles</f:facet>
+       			 <f:facet name="targetCaption">Currents Roles</f:facet>
+		</p:pickList>
+
+		<p:growl id="messagePopup" life="2000" />
+
+	 	<p:commandButton value="#{dictionary.save}" 
+	 	id="commandButtonEdit" 
+	 	update="messagePopup"
+	 	actionListener="#{userEditController.save}" 
+		styleClass="ui-priority-primary" />
+		
+		</h:form>
+
+			</ui:define>
+		</ui:composition>
+
+</h:body>
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-3.2.xsd
+http://www.springframework.org/schema/jee
+http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+	<!-- enable use-expressions -->
+	<security:http auto-config="true" use-expressions="true">
+
+		<security:intercept-url pattern="/admin**"
+			access="hasRole('ROLE_ADMIN')" />
+
+		<!-- access denied page -->
+		<security:access-denied-handler
+			error-page="/loginAccessDenied.xhtml" />
+
+		<security:form-login 
+			login-page="/login.xhtml"
+			default-target-url="/home.xhtml" 
+			authentication-failure-url="/loginAccessDenied.xhtml" />
+		<security:logout 
+			invalidate-session="true"
+            delete-cookies="true"
+            logout-success-url="/logout.xhtml" />
+	</security:http>
+
+	<!-- Select users and user_roles from database -->
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider>
+			<security:jdbc-user-service
+				data-source-ref="dataSource"
+				users-by-username-query="select username,password, enabled from users where username=?"
+				authorities-by-username-query="select username, role from roles where username =?  " />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+
+</beans>

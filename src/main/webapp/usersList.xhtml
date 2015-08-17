@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html 
+	lang="#{localeController.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+		
+
+	<ui:composition template="template/Layout.xhtml">
+
+		<ui:define name="content">
+
+		<!-- Refreshing Table -->
+        #{usersListController.updateTable()}
+        
+		<h:form id="userForm">
+
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+				<p:dataTable 
+					id="userTableId" 
+					var="user"
+					rowKey="#{user.username}"
+					value="#{usersListController.userListDataModel}" paginator="true"
+					editable="true" 
+					selection="#{usersListController.selectedUser}" 
+					rowSelectListener="#{usersListController.onRowSelect}" onRowSelectUpdate=""
+					rowUnselectListener="#{usersListController.onRowUnselect}" onRowUnselectUpdate=""
+					rows="10"
+					selectionMode="single">
+
+<!-- <p:ajax event="rowSelect"
+                listener="#{massnahmenController.rowSelected}" process="@this"
+                update="@this" />
+            <p:ajax event="rowUnselect"
+                listener="#{massnahmenController.rowUnselected}" process="@this"
+                update="@this" /> -->
+					<f:facet name="header">	
+         					 #{dictionary.users_list}
+         				<!--  	  
+						<p:button outcome="userAdd" value="#{dictionary.add}"></p:button>
+						
+						<p:commandButton value="Refresh" update=":userForm:userTableId"
+							actionListener="#{usersListController.updateTable()}">
+						</p:commandButton>
+						-->
+					</f:facet>					
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{dictionary.action}" />
+						</f:facet>				
+						
+						<p:commandButton value="#{dictionary.edit}" update=":userForm:userTableId"
+							actionListener="#{usersListController.redirectToUserEdit(event)}">
+						</p:commandButton>
+					
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText styleClass="outputText" value="#{dictionary.username}"></h:outputText>
+						</f:facet>
+						<h:outputText styleClass="outputText" value="#{user.username}"></h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText styleClass="outputText" value="#{dictionary.name}"></h:outputText>
+						</f:facet>
+						<h:outputText styleClass="outputText" value="#{user.personName}"></h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText styleClass="outputText" value="#{dictionary.roles}"></h:outputText>
+						</f:facet>
+						<h:outputText styleClass="outputText" value="#{user.traslatedRoles}"></h:outputText>
+					</p:column>
+					 
+				</p:dataTable>
+		</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

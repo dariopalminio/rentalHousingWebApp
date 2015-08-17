@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html 
+	lang="#{localeController.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+		
+
+	<ui:composition template="template/Layout.xhtml">
+
+		<ui:define name="content">
+
+		<!-- Refreshing Table -->
+        #{housesListController.updateTable()}
+        
+		<h:form id="houseForm">
+
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+				<p:dataTable id="houseTableId" var="house"
+					value="#{housesListController.houseListDataModel}" paginator="true"
+					editable="true" selection="#{housesListController.selectedHouse}" rows="10"
+					selectionMode="single">
+
+					<f:facet name="header">	
+         					 #{dictionary.houses_list}
+         					  
+						<p:button outcome="houseAdd" value="#{dictionary.add}"></p:button>
+						
+						<p:commandButton value="Refresh" update=":houseForm:houseTableId"
+							actionListener="#{housesListController.updateTable()}">
+						</p:commandButton>
+					</f:facet>					
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{dictionary.action}" />
+						</f:facet>				
+						
+						<p:commandButton value="#{dictionary.edit}" update=":houseForm:houseTableId"
+							actionListener="#{housesListController.redirectToHouseEdit(event)}">
+						</p:commandButton>
+					
+						<p:commandButton value="#{dictionary.delete}" update=":houseForm:houseTableId"
+							actionListener="#{housesListController.deleteHouse(event)}">
+						</p:commandButton>
+						
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText styleClass="outputText" value="#{dictionary.address}"></h:outputText>
+						</f:facet>
+						<h:outputText styleClass="outputText" value="#{house.address}"></h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText styleClass="outputText" value="#{dictionary.city}"></h:outputText>
+						</f:facet>
+						<h:outputText styleClass="outputText" value="#{house.city}"></h:outputText>
+					</p:column>
+				</p:dataTable>
+		</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
+						

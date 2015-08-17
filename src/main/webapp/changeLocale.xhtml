@@ -1,0 +1,32 @@
+<html lang="#{localeController.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+
+	<ui:composition template="template/Layout.xhtml">
+		<ui:define name="content">
+
+			<f:view locale="#{localeController.locale}">
+
+				<p>#{dictionary.select_language}</p>
+				<h:form id="localeForm">
+					<h:selectOneMenu value="#{localeController.language}"
+						onchange="submit()">
+						<f:selectItem itemValue="en" itemLabel="English" />
+						<f:selectItem itemValue="es" itemLabel="Español" />
+					</h:selectOneMenu>
+				</h:form>
+
+			</f:view>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+
+</html>

@@ -1,0 +1,125 @@
+    body {
+        margin:0px;
+        padding:0px;
+        height:100%;
+        overflow:hidden;
+        font-family: "Sans-serif", Times, serif;
+		font-style: normal;
+		font-size: 12px;
+    }
+    
+     ·body {
+        margin:50px 10px 0px 250px;
+        background-color: #444444;
+    }
+    
+	.body h2 {
+		font-family: "Sans-serif", Times, serif;
+		font-style: normal;
+		font-size: 12px;
+	}
+	
+    .page {
+        min-height:100%;
+        position:relative;
+        padding:0px;
+    }
+     
+    .header {
+        padding:0px;
+        width:100%;
+        text-align:center;
+        background-color: #333333;
+    }
+
+    .header_menu {
+        background-color: #222222;
+        color: yellow;
+    }
+    
+	.header img {
+  	 	position: relative; 
+  	 	top: 0; 
+ 		left: 0; 
+  	 	right: 0; 
+ 	 	bottom: 0; 
+ 	 	margin:0px;
+ 	 	min-width: 50%;
+ 	 	min-height: 50%;
+ 	 	width:100%;
+ 	 	height:100px;
+	}
+
+    .content {
+            padding:0px;
+            /*padding-bottom:40px;  Height of the footer element */
+            overflow:hidden;
+    }
+     
+    .menu {
+        padding:0px 0px 0px 0px;
+        width:200px;
+        height:500px;
+        float:left;
+        background-color: #669999;
+        font-family: "Sans-serif", Times, serif;
+		font-style: normal;
+		font-size: 14px;
+    }
+ 
+
+    .footer {
+        clear:both;
+        position:relative;
+        bottom:0;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+        left:0;
+        text-align:center;
+        width:100%;
+        height:20px;
+        background-color: #333333;
+    }     
+     	
+    .table  {
+		border-collapse:collapse;
+		border-spacing:0;
+		border-color:#ccc;
+		}
+    
+	.table td{
+		font-family:Arial, sans-serif;
+		font-size:14px;
+		padding:10px 5px;
+		border-style:solid;
+		border-width:1px;
+		overflow:hidden;
+		word-break:normal;
+		border-color:#ccc;
+		color:#333;
+		background-color:#fff;
+		}
+
+	.table th{
+		font-family:Arial, sans-serif;
+		font-size:14px;
+		font-weight:normal;
+		padding:10px 5px;
+		border-style:solid;
+		border-width:1px;
+		overflow:hidden;
+		word-break:normal;
+		border-color:#ccc;
+		color:#333;
+		background-color:#f0f0f0;
+		}
+
+	.table .tg-4eph{
+		background-color:#f9f9f9
+		}
+		
+	.from {
+  		position: relative;
+  		left : 0px;
+  		background-color: yellow;
+		}

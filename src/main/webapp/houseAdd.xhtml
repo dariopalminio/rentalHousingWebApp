@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="#{localeController.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+
+	<ui:composition template="template/Layout.xhtml">
+
+		<ui:define name="content">
+
+
+			<h:form>
+
+				<p:messages id="messages" showDetail="true" autoUpdate="true"
+					closable="true" />
+
+				<p:panelGrid id="addHouseGrid" columns="2">
+
+					<p:outputLabel for="houseTypeId" value="#{dictionary.house_type}" />
+					<p:selectOneMenu id="houseTypeId" value="#{houseAddController.house.houseType}">
+    					<f:selectItems value="#{houseAddController.houseTypesList}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel for="address" value="#{dictionary.address}" />
+					<p:inputText id="address"
+						value="#{houseAddController.house.address}" label="address" />
+
+					<h:outputLabel for="city" value="#{dictionary.city}" />
+					<p:inputText id="city" value="#{houseAddController.house.city}"
+						label="City" />
+
+
+					<p:commandButton value="#{dictionary.select_proprietary}"
+						icon="ui-icon-extlink"
+						actionListener="#{houseAddController.chooseProprietary}">
+						<p:ajax event="dialogReturn"
+							listener="#{houseAddController.onProprietaryChosen}"
+							update="selectedProprietaryName" />
+					</p:commandButton>
+					<h:outputText id="selectedProprietaryName"
+						value="#{houseAddController.selectedProprietaryName}" />
+
+				</p:panelGrid>
+
+				<p:growl id="messagePopup" life="2000" />
+
+				<p:commandButton value="#{dictionary.add}" id="commandButtonAdd"
+					update="messagePopup"
+					actionListener="#{houseAddController.addHouse}"
+					styleClass="ui-priority-primary" />
+
+				<p:commandButton value="#{dictionary.clear}" id="commandButtonClear"
+					update="addHouseGrid" actionListener="#{houseAddController.clear}"
+					styleClass="ui-priority-primary" />
+
+			</h:form>
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<!-- 
+	Application Config:
+	Persistence, Entities, DAOs and Services
+	 -->
+
+    <context:component-scan
+            base-package="com.daro.rental.housing"/>  
+
+    <!-- Enables the Spring MVC @Controller programming model
+    <mvc:annotation-driven /> -->
+    
+	<annotation-driven />
+
+	<!-- 
+	Handles HTTP GET requests for /resources/** by efficiently serving 
+	up public static resources in the ${webappRoot}/resources directory 
+	-->
+	<resources mapping="/resources/**" location="/resources/" />
+	
+	<!-- SessionFactory Bean definition: Spring and Hibernate 4 -->
+	<beans:bean id="hibernate4AnnotatedSessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="annotatedClasses">
+			<!--Entities mapped -->
+			<beans:list>
+				<beans:value>com.daro.rental.housing.model.entity.Person</beans:value>
+				<beans:value>com.daro.rental.housing.model.entity.House</beans:value>
+				<beans:value>com.daro.rental.housing.model.entity.Pay</beans:value>
+				<beans:value>com.daro.rental.housing.model.entity.PayItem</beans:value>
+				<beans:value>com.daro.rental.housing.model.entity.Contract</beans:value>
+				<beans:value>com.daro.rental.housing.model.entity.User</beans:value>
+				<beans:value>com.daro.rental.housing.model.entity.Role</beans:value>
+			</beans:list>
+		</beans:property>
+		<beans:property name="hibernateProperties">
+			<!-- MySQL Dialect -->
+			<beans:props>
+				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
+				</beans:prop>
+				<beans:prop key="hibernate.show_sql">true</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+
+	<!-- Transaction Manager: Annotation -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- Transaction Manager: Spring and Hibernate 4 -->
+	<beans:bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<!-- DAO injection definition: Person DAO -->
+	<beans:bean id="personDAO" class="com.daro.rental.housing.dao.PersonDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<!-- Service injection definition: Person Service -->
+	<beans:bean id="personService"
+		class="com.daro.rental.housing.service.PersonServiceImpl">
+		<beans:property name="dao" ref="personDAO"></beans:property>
+	</beans:bean>
+
+	<!-- DAO injection definition: House DAO -->
+	<beans:bean id="houseDAO" class="com.daro.rental.housing.dao.HouseDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<!-- Service injection definition: House Service -->
+	<beans:bean id="houseService"
+		class="com.daro.rental.housing.service.HouseServiceImpl">
+		<beans:property name="dao" ref="houseDAO"></beans:property>
+	</beans:bean>
+
+	<!-- DAO injection definition: User DAO -->
+	<beans:bean id="userDAO" class="com.daro.rental.housing.dao.UserDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<!-- Service injection definition: User Service -->
+	<beans:bean id="userService"
+		class="com.daro.rental.housing.service.UserServiceImpl">
+		<beans:property name="dao" ref="userDAO"></beans:property>
+	</beans:bean>
+
+	<!-- DAO injection definition: Role DAO -->
+	<beans:bean id="roleDAO" class="com.daro.rental.housing.dao.RoleDAOImpl">
+		<beans:property name="sessionFactory"
+			ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<!-- Service injection definition: Role Service -->
+	<beans:bean id="roleService"
+		class="com.daro.rental.housing.service.RoleServiceImpl">
+		<beans:property name="dao" ref="roleDAO"></beans:property>
+	</beans:bean>
+	
+</beans:beans>

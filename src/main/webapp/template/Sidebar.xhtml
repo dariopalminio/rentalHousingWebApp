@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="#{localeController.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet name="common-style.css" library="css" />
+</h:head>
+<h:body>
+	<f:view locale="#{localeController.locale}">
+		<ui:composition>
+
+			<h:form>
+				<p:slideMenu style="width:202px">
+					<p:menuitem value="#{dictionary.home}"
+							url="home.xhtml" />
+					<p:menuitem value="#{dictionary.login_to_my_account}"
+							url="login.xhtml" />
+					<p:menuitem value="#{dictionary.logout}" actionListener="#{loginController.logout}"  ajax="false" icon="ui-icon-close"/>
+					<p:separator />
+					<p:submenu label="#{dictionary.persons}" icon="ui-icon-newwin">
+						<p:menuitem value="#{dictionary.persons_list}"
+							url="personsList.xhtml" />
+						<p:menuitem value="#{dictionary.add_new_person}"
+							url="personAdd.xhtml" />
+						<p:menuitem value="#{dictionary.users}"
+							url="usersList.xhtml" />
+					</p:submenu>
+					<p:submenu label="#{dictionary.houses}" icon="ui-icon-newwin">
+						<p:menuitem value="#{dictionary.houses_list}"
+							url="housesList.xhtml" />
+						<p:menuitem value="#{dictionary.add_new_house}"
+							url="houseAdd.xhtml" />
+					</p:submenu>
+					<p:submenu label="#{dictionary.contracts}" icon="ui-icon-newwin">
+						<p:menuitem value="List" url="/" />
+						<p:menuitem value="Add" url="/" />
+					</p:submenu>
+					<p:separator />
+					<p:submenu
+						label="#{dictionary.languague} #{localeController.language}"
+						icon="ui-icon-newwin">
+						<p:menuitem value="#{dictionary.change_language}"
+							url="changeLocale.xhtml" />
+					</p:submenu>
+				</p:slideMenu>
+			</h:form>
+
+		</ui:composition>
+	</f:view>
+</h:body>
+</html>

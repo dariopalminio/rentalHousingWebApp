@@ -1,0 +1,32 @@
+<html 
+	lang="#{localeController.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:sec="http://www.springframework.org/security/tags">
+ 
+
+<h:body>
+ 
+    	<ui:composition template="template/Layout.xhtml">
+    	<ui:define name="content">
+    	Ejemplo...
+        <h4>#{homeController.welcomeMessage}</h4>
+      
+      
+        #{dictionary.you_have_enabled_following_permissions}:
+        <sec:authorize ifAllGranted="ROLE_ADMIN">ROLE_ADMIN</sec:authorize>
+        <sec:authorize access="hasRole('ROLE_AGENT')">ROLE_AGENT</sec:authorize>
+        <sec:authorize access="hasRole('ROLE_PROPRIETARY')">ROLE_PROPRIETARY</sec:authorize>
+        <sec:authorize access="hasRole('ROLE_RENTERS')">ROLE_RENTERS</sec:authorize>
+        <sec:authorize access="hasRole('ROLE_ANONYMOUS')">ROLE_ANONYMOUS</sec:authorize>   
+        
+        </ui:define>
+    	</ui:composition>
+ 
+</h:body>
+ 
+ 
+</html>

@@ -1,0 +1,96 @@
+Problem:
+
+HTTP Status 500 - Request processing failed; nested exception is org.hibernate.PersistentObjectException: detached entity passed to persist: com.daro.model.entity.Person
+
+type Exception report
+
+message Request processing failed; nested exception is org.hibernate.PersistentObjectException: detached entity passed to persist: com.daro.model.entity.Person
+
+description The server encountered an internal error that prevented it from fulfilling this request.
+
+exception:
+
+org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.hibernate.PersistentObjectException: detached entity passed to persist: com.daro.model.entity.Person
+...
+root cause
+org.hibernate.PersistentObjectException: detached entity passed to persist: com.daro.model.entity.Person
+	org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:139)
+	org.hibernate.internal.SessionImpl.firePersist(SessionImpl.java:801)
+	org.hibernate.internal.SessionImpl.persist(SessionImpl.java:794)
+	org.hibernate.engine.spi.CascadingActions$7.cascade(CascadingActions.java:314)
+	org.hibernate.engine.internal.Cascade.cascadeToOne(Cascade.java:350)
+	org.hibernate.engine.internal.Cascade.cascadeAssociation(Cascade.java:293)
+	org.hibernate.engine.internal.Cascade.cascadeProperty(Cascade.java:161)
+	org.hibernate.engine.internal.Cascade.cascade(Cascade.java:118)
+	org.hibernate.event.internal.AbstractSaveEventListener.cascadeBeforeSave(AbstractSaveEventListener.java:432)
+	org.hibernate.event.internal.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:265)
+	org.hibernate.event.internal.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:194)
+	org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:125)
+	org.hibernate.event.internal.DefaultPersistEventListener.entityIsTransient(DefaultPersistEventListener.java:206)
+	org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:149)
+	org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:75)
+	org.hibernate.internal.SessionImpl.firePersist(SessionImpl.java:811)
+	org.hibernate.internal.SessionImpl.persist(SessionImpl.java:784)
+	org.hibernate.internal.SessionImpl.persist(SessionImpl.java:789)
+	com.daro.dao.generic.GenericDao.add(GenericDao.java:50)
+	com.daro.service.generic.GenericService.add(GenericService.java:37)
+	...
+	org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod...
+...note The full stack trace of the root cause is available in the Apache Tomcat/7.0.56 logs.
+
+
+The code problem was:
+----------------------------------------------------------------------------------------------
+@Entity
+@Table(name = "house")
+public class House implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
+//...
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity=Person.class )
+    @JoinColumn(name="proprietary_id")
+	private Person proprietary;
+
+// The proble is CascadeType.PERSIST
+//...
+}
+@Entity
+@Table(name = "person")
+public class Person implements java.io.Serializable {
+//...
+    @OneToMany(mappedBy="proprietary")
+	private List<House> housesList = new ArrayList<House>();
+//...
+}
+
+----------------------------------------------------------------------------------------------
+
+The solution was to change DETACH instead of PERSIST in @ManyToOne annotation:
+----------------------------------------------------------------------------------------------
+@Entity
+@Table(name = "house")
+public class House implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
+//...
+    @ManyToOne( cascade = {CascadeType.DETACH, CascadeType.MERGE}, targetEntity=Person.class )
+    @JoinColumn(name="proprietary_id")
+	private Person proprietary;
+//...
+}
+
+@Entity
+@Table(name = "person")
+public class Person implements java.io.Serializable {
+//...
+    @OneToMany(mappedBy="proprietary")
+	private List<House> housesList = new ArrayList<House>();
+//...
+}
+----------------------------------------------------------------------------------------------
+
+
+In Hibernate CascadeType.DETACH plays the role when more than one entity is associated to each other. CascadeType.DETACH cascades the detach operation to all associated entities detach from hibernate session. If one entity is detached, other associated entities will also be detached if CascadeType.DETACH is annotated.
+
+
+

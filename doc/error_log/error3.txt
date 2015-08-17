@@ -1,0 +1,39 @@
+HTTP Status 500 - Request processing failed; nested exception is org.hibernate.NonUniqueObjectException: A different object with the same identifier value was already associated with the session : 
+
+type Exception report
+
+message Request processing failed; nested exception is org.hibernate.NonUniqueObjectException: A different object with the same identifier value was already associated with the session : [com.daro.rental.housing.model.entity.House#11]
+
+description The server encountered an internal error that prevented it from fulfilling this request.
+
+exception
+
+org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.hibernate.NonUniqueObjectException: A different object with the same identifier value was already associated with the session : [com.daro.rental.housing.model.entity.House#11]
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:973)
+	org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:863)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:646)
+	org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:837)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:727)
+	org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	org.springframework.orm.hibernate4.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:152)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:108)
+
+root cause
+
+org.hibernate.NonUniqueObjectException: A different object with the same identifier value was already associated with the session : [com.daro.rental.housing.model.entity.House#11]
+	org.hibernate.engine.internal.StatefulPersistenceContext.checkUniqueness(StatefulPersistenceContext.java:617)
+....
+
+To understand the cause of this exception, it’s important to understand detached objects and what happens when you call saveOrUpdate() (or just update()) on a detached object.
+
+When we close an individual Hibernate Session, the persistent objects we are working with are detached. This means the data is still in the application’s memory, but Hibernate is no longer responsible for tracking changes to the objects.
+
+If we then modify our detached object and want to update it, we have to reattach the object. During that reattachment process, Hibernate will check to see if there are any other copies of the same object. If it finds any, it has to tell us it doesn’t know what the “real” copy is any more. Perhaps other changes were made to those other copies that we expect to be saved, but Hibernate doesn’t know about them, because it wasn’t managing them at the time.
+
+Rather than save possibly bad data, Hibernate tells us about the problem via the NonUniqueObjectException.
+
+So what are we to do? In Hibernate 3, we have merge() (in Hibernate 2, use saveOrUpdateCopy()). This method will force Hibernate to copy any changes from other detached instances onto the instance you want to save, and thus merges all the changes in memory before the save.
+- See more at: http://www.stevideter.com/2008/12/07/saveorupdate-versus-merge-in-hibernate/#sthash.2FfDPS1Z.dpuf
+
+
+

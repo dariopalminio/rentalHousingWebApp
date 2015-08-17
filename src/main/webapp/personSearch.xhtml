@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="#{localeController.language}"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view locale="#{localeController.locale}">
+<h:head>
+        <title>#{dictionary.search_person}</title>
+                <style type="text/css">
+            .ui-widget {
+                font-size: 90%;
+            }
+        </style>
+    </h:head>
+<h:body>
+	
+				
+		<h:form>
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<h:outputLabel for="dniToSearch"
+				value="#{dictionary.person_dni_to_search}" />
+			<p:inputText id="dniToSearch"
+				value="#{personSearchController.dniToSearch}" label="dniToSearch" />
+
+			<!-- personSearchController -->
+			<p:growl id="messagePopup" life="2000" />
+
+			<p:commandButton id="commandButtonSearch" icon="ui-icon-search"
+				value="Search" update="messagePopup, addPanel"
+				actionListener="#{personSearchController.search}"
+				styleClass="ui-priority-primary" />
+
+
+			<p:panelGrid id="addPanel" columns="2">
+
+				<h:outputLabel for="firstName" value="#{dictionary.first_name}" />
+				<h:outputText id="firstName"
+					value="#{personSearchController.person.firstName}" />
+
+				<h:outputLabel for="lastName" value="#{dictionary.last_name}" />
+				<h:outputText id="lastName"
+					value="#{personSearchController.person.lastName}" />
+
+				<h:outputLabel for="dniType" value="#{dictionary.dni_type}" />
+				<h:outputText id="dniType"
+					value="#{personSearchController.person.dniType}" />
+
+				<h:outputLabel for="dniCode" value="#{dictionary.dni}" />
+				<h:outputText id="dniCode"
+					value="#{personSearchController.person.dniCode}" />
+
+				<h:outputLabel for="address" value="#{dictionary.address}" />
+				<h:outputText id="address"
+					value="#{personSearchController.person.address}" />
+
+				<h:outputLabel for="city" value="#{dictionary.city}" />
+				<h:outputText id="city"
+					value="#{personSearchController.person.city}" />
+
+				<h:outputLabel for="email" value="#{dictionary.email}" />
+				<h:outputText id="email"
+					value="#{personSearchController.person.email}" />
+
+				<h:outputLabel for="mobile" value="#{dictionary.mobile}" />
+				<h:outputText id="mobile"
+					value="#{personSearchController.person.mobile}" />
+
+				<h:outputLabel for="phone" value="#{dictionary.phone}" />
+				<h:outputText id="phone"
+					value="#{personSearchController.person.phone}" />
+
+			</p:panelGrid>
+
+			<p:commandButton id="commandButtonSelect" value="Select"
+				actionListener="#{personSearchController.selectPerson}" />
+
+		</h:form>
+
+	
+</h:body>
+</f:view>
+</html>

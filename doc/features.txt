@@ -1,0 +1,64 @@
+
+-Design and create Data Base using MySQL:
+
+-Create Eclipse Project and Basic POM with Maven dependencies configuration:
+
+-Create ORM Database Structure with hibernate and Spring:
+http://www.codejava.net/frameworks/spring/spring-4-and-hibernate-4-integration-tutorial-part-1-xml-configuration
+http://www.techzoo.org/spring-framework/springmvc-hibernate-crud-tutorial-using-eclipse.html
+http://www.journaldev.com/3531/spring-mvc-hibernate-mysql-integration-crud-example-tutorial
+http://www.beingjavaguys.com/2014/05/spring4-hibernate4-integration.html
+http://yanuar7199.wordpress.com/2013/03/30/hibernate-generic-dao-for-generic-purpose/
+
+-Create MVC structure with spring MVC:
+http://hoonzis.blogspot.com.ar/2011/02/spring-mvc-simple-project-spring-by.html?m=1
+http://www.codejava.net/frameworks/spring/spring-mvc-beginner-tutorial-with-spring-tool-suite-ide
+http://javahash.com/spring-4-mvc-hello-world-tutorial-full-example/
+http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
+
+Next Features:
+
+-Security with Permissions and Login.
+http://codehustler.org/blog/spring-security-tutorial-form-login/
+http://www.studytrails.com/frameworks/spring/spring-security-custom-login-page.jsp
+
+-Internationalization:
+Con JSF:
+http://www.notodocodigo.com/introduccion-a-jsf/internacionalizacion/
+http://jdevelopment.nl/internationalization-jsf-utf8-encoded-properties-files/
+http://www.softwarepassion.com/java-ee-6-jsf-2-0-internationalization/
+http://www.andygibson.net/blog/article/resource-bundles-in-jsf-2-0-applications/
+https://www.youtube.com/watch?v=mYmQ4q4Ysdo
+
+Con sprint:
+http://docs.spring.io/spring/docs/3.0.0.M4/spring-framework-reference/html/ch15s06.html
+http://www.technicalkeeda.com/spring/spring-mvc-internationalization-i18n-example
+http://www.journaldev.com/2610/spring-mvc-internationalization-i18n-and-localization-l10n-example
+
+-Create Schema for Tiles Configuration
+http://www.techzoo.org/spring-framework/spring-mvc-tiles-3-integration-tutorial.html
+http://viralpatel.net/blogs/spring-3-mvc-tiles-plugin-tutorial-example-eclipse/
+
+-Validations.
+http://www.journaldev.com/2610/spring-mvc-internationalization-i18n-and-localization-l10n-example
+
+-Exception Handling.
+
+-themes and style.
+http://www.javabeat.net/spring-themes/
+http://www.devmanuals.com/tutorials/java/spring/spring3/mvc/Spring3-MVC-Themes.html
+http://stackoverflow.com/questions/7141397/spring-themes-and-application-context
+
+-Log
+http://www.codingpedia.org/ama/how-to-log-in-spring-with-slf4j-and-logback/
+https://wiki.base22.com/display/btg/How+to+setup+SLF4J+and+LOGBack+in+a+web+app+-+fast
+
+-Security
+http://cleventy.com/configurando-spring-security
+http://ictblog.luisalbertogh.net/?p=235
+http://www.juntadeandalucia.es/servicios/madeja/contenido/recurso/213
+http://www.juntadeandalucia.es/servicios/madeja/contenido/recurso/437
+
+-Dialog Selection
+http://www.primefaces.org/showcase/ui/df/data.xhtml
+
